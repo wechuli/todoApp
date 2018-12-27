@@ -1,48 +1,37 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class TodoList extends Component {
   state = {
     todos: []
   };
 
-
-  getPosts= async ()=>{
+  getPosts = async () => {
     const data = await fetch("http://127.0.0.1:8000/api/");
     const jsonData = await data.json();
     this.setState({
-        todos:jsonData
-    })
-  }
+      todos: jsonData
+    });
+  };
 
-  async componentDidMount() {
-      setInterval(this.getPosts,3000);
-    
+  componentDidMount() {
+    this.intervalID = setInterval(this.getPosts, 7000);
   }
-  componentWillUnmount(){
-      console.log('I have unmounted');
-      clearInterval(this.getPosts);
+  componentWillUnmount() {
+    console.log("I have unmounted");
+    clearInterval(this.intervalID);
   }
   render() {
-      console.log('I have rendered');
+    console.log("I have rendered");
     return (
       <article className="todolist">
-      {
-          this.state.todos.map((todo)=>{
-              return(
-                  <NavLink key={todo.id} to={`/todo/${todo.id}`}>
-                <div className="card" >
-                <p> <b>Post Id: </b>{todo.id}</p>
-                <p> <b>Post title: </b>{todo.title}</p>
-                <p> <b>Highlights: </b>{todo.body.slice(0,15)}</p>
-              </div>
-                  </NavLink>
-             
-              )
-          })
-      }
-       
-        
+        {this.state.todos.map(todo => {
+          return (
+            <Link key={todo.id} to={`/todo/${todo.id}`}>
+              
+            </Link>
+          );
+        })}
       </article>
     );
   }

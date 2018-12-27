@@ -11,6 +11,7 @@ class App extends Component {
       <React.Fragment>
         <Header/>
         <Route path='/' exact component={TodoList}/>
+        <Route path='/todo/:todoId' component={Todo}/>
       </React.Fragment>
     );
   }
